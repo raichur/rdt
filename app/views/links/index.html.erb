@@ -1,16 +1,20 @@
-<h1>Listing links</h1>
-
-<table>
-  <tbody>
-    <% @links.each do |link| %>
-      <tr>
-        <td><a href="<%= link.url %>"><%= link.title %></a></td>
-        <td><%= link_to 'Show', link %></td>
-        <% if ( link.user == current_user && user_signed_in? ) %>
-          <td><%= link_to 'Edit', edit_link_path(link) %></td>
-          <td><%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+<% @links.each do |link| %>
+  <tr>
+    <%= link_to like_link_path(link), method: :put, class: "btn" do %>
+      Upvote
+      <%= link.get_upvotes.size %>
     <% end %>
-  </tbody>
-</table>
+    <%= link_to dislike_link_path(link), method: :put, class: "btn" do %>
+    Downvote
+    <%= link.get_downvotes.size %>
+    <% end %>
+    <td><a href="<%= link.url %>"><%= link.title %></a></td>
+    <small class="author">Submitted <%= time_ago_in_words(link.created_at) %></small>
+    <td><%= link_to 'Show', link %></td>
+    <% if ( link.user == current_user && user_signed_in? ) %>
+      <td><%= link_to 'Edit', edit_link_path(link) %></td>
+      <td><%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+  <br/>
+<% end %>
