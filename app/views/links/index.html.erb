@@ -9,7 +9,10 @@
     <%= link.get_downvotes.size %>
     <% end %>
     <td><a href="<%= link.url %>"><%= link.title %></a></td>
-    <small class="author">Submitted <%= time_ago_in_words(link.created_at) %></small>
+    <h2>
+      <%= link_to link.title, link %><br>
+      <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= link.user.name %></small>
+    </h2>
     <td><%= link_to 'Show', link %></td>
     <% if ( link.user == current_user && user_signed_in? ) %>
       <td><%= link_to 'Edit', edit_link_path(link) %></td>
